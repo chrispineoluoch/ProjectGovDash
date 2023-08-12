@@ -1,0 +1,95 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card signup-card shadow bg-white rounded pe-2 ps-2">
+    <div class="card-body signup-card-body">
+        <h5 class="signup-card-title text-warm_light fs-2 fw-bold">
+            Sign up
+        </h5>
+        <h6><span class="badge bg-warm mt-2">Welcome back.</span></h6>
+
+        <div>
+            <section id="registrationForm">
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <div class="signup-textbox-group">
+                            <input asp-for="Input.Email" class="form-control signup-textboxes" autocomplete="username" placeholder="My email address is ..." aria-required="true" />
+                            <span asp-validation-for="Input.Email" class="text-danger signup-validation-text"></span>
+
+                            <input asp-for="Input.Password" class="form-control signup-textboxes" autocomplete="new-password" placeholder="My password is ..." aria-required="true" />
+                            <span asp-validation-for="Input.Password" class="text-danger signup-validation-text"></span>
+
+                            <input asp-for="Input.ConfirmPassword" class="form-control signup-textboxes" autocomplete="new-password" placeholder="My password is  ..." aria-required="true" />
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger signup-validation-text"></span>
+                        </div>
+
+                        <div class="forgot-password-div">
+                            <a id="forgot-password" asp-page="./ForgotPassword" class="forgot-password-link">Forgot your password?</a>
+                        </div>
+
+                        <div>
+                            <button id="registerSubmit" type="submit" class="btn btn-warm btn-lg signup-button">Sign up</button>
+                        </div>
+
+                        <div class="or-separator mt-lg-2 mb-lg-2 snapple-seperator">
+                            <span class="or-text">or</span>
+                        </div>
+
+                        <div class="pb-2">
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-warm btn-lg signin-button">Sign in</a>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="social-group">
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See this
+                                    <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                        article about setting up this ASP.NET application to support logging in via external services
+                                    </a>
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    <p class="d-grid justify-content-between">
+                                        @foreach (var provider in Model.ExternalLogins!)
+                                        {
+                                            <button type="submit" class="btn btn-lg btn-primary btn-warm mb-2 provider-button signup-button" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                @if (provider.Name == "Google")
+                                                {
+                                                    <i class="fa-brands fa-google"></i> <!-- Replace with the appropriate Fontawesome class for the Google icon -->
+                                                }
+                                                else if (provider.Name == "Microsoft")
+                                                {
+                                                    <i class="fa-brands fa-microsoft"></i> <!-- Replace with the appropriate Fontawesome class for the Microsoft icon -->
+                                                }
+                                                @provider.DisplayName
+                                            </button>
+                                        }
+                                    </p>
+                                </div>
+                            </form>
+                        }
+                    }
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

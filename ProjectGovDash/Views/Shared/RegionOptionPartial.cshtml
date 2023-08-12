@@ -1,0 +1,10 @@
+﻿
+<option value="">Select a Region</option>
+
+@if (ViewBag.RegionOptions != null)
+{
+    foreach (var item in ViewBag.RegionOptions)
+    {
+        <option value="@item.Value">@item.Text </option>
+    }
+}

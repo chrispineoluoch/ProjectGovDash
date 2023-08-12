@@ -1,0 +1,96 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div class="d-none">
+        <input id="CapturedProfileData" value="@ViewBag.State" />
+    </div>
+
+    <!--This is the profile creation toast-->
+    <div>
+        <div class="container row">
+            <div class="col-sm-6">
+                <div role="alert" aria-live="assertive" aria-atomic="true" class="card toast toast-bg card-styling-alert" data-bs-autohide="false">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <i class="icon-styling-alert fa-regular fa-bell text-warm_light"></i>
+                            <h5 class="card-title text-warm_light">Notification</h5>
+                        </div>
+                        <p class="card-text">Hello, your profile will help us to better personalize your user experience. Let's create your profile first.</p>
+                        <a href="@Url.Action("Create", "Profiles")" class="btn btn-warm rounded-pill">Create Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="homepage">
+        <div class="container">
+            <!--This is a Jumbotron-->
+            <div class="p-5 mb-4 bg-body-tertiary rounded-3 shadow">
+                <div class="container-fluid pt-2 pb-5">
+                    <h1 class="display-5 fw-bold text-warm_light text-center">The Digital Superhighway Project</h1>
+                    <p class="col-md-8 fs-5 text-center m-auto">
+                        Experience Kenya's digital superhighway, paving the way for remarkable economic progress! With seamless connectivity, it empowers sectors like Health, Agriculture, MSME, and
+                        Financing, unlocking incredible achievements for all. Discover reliable, affordable high-speed internet, propelling efficient government services and fueling the nation's vibrant economy.
+                        Join the digital revolution and embrace a brighter future for Kenya!
+                    </p>
+                    <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto mt-3" type="button" onclick="window.location.href='@Url.Action("Dashboard", "DSHSurveys")'">
+                        National Survey <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!--These are project specific counters-->
+            <div class="row justify-content-center stat-cards">
+                <div class="col-auto mb-3">
+                    <div class="card bg-light-subtle text-success question-card border-0 shadow" style="width: 18rem;">
+                        <div class="card-body pb-0">
+                            <p id="sample-question-1" class="card-text fs-5 text-center fw-bold mb-2"><span class="fa fa-wifi"></span>  Public WiFi Connectivity</p>
+                            <h3 class="text-center"><span class="badge bg-success">25,000</span> sites</h3>
+                        </div>
+                        <div class="card-footer border-0 pb-3 bg-light-subtle">
+                            <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto" type="button" onclick="window.location.href='@Url.Action("Index", "PublicWiFis")'">
+                                Explore <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto mb-3">
+                    <div class="card bg-light-subtle text-success question-card border-0 shadow" style="width: 18rem;">
+                        <div class="card-body pb-0">
+                            <p id="sample-question-1" class="card-text fs-5 text-center fw-bold mb-2"><span class="fa fa-city"></span>  Last Mile Connectivity</p>
+                            <h3 class="text-center"><span class="badge bg-success">2000</span> sites</h3>
+                        </div>
+                        <div class="card-footer border-0 pb-3 bg-light-subtle">
+                            <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto" type="button" onclick="window.location.href='@Url.Action("Dashboard", "DSHSurveys")'">
+                                Explore <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto mb-3">
+                    <div class="card bg-light-subtle text-success question-card border-0 shadow" style="width: 18rem;">
+                        <div class="card-body pb-0">
+                            <p id="sample-question-1" class="card-text fs-5 text-center fw-bold mb-2"><span class="fa fa-road"></span>  Backbone Fiber</p>
+                            <h3 class="text-center"><span class="badge bg-success">100,000</span> kms</h3>
+                        </div>
+                        <div class="card-footer border-0 pb-3 bg-light-subtle">
+                            <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto" type="button" onclick="window.location.href='@Url.Action("Dashboard", "DSHSurveys")'">
+                                Explore <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Experimental Timeline-->
+</div>
+
+@section Scripts {
+    <script src="~/js/profiletoast.js"></script>
+}

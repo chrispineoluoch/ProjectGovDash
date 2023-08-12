@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjectGovDash.Models;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<div>
+    <button class="btn btn-light rounded-pill border-color-warm circular-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><span class="fa fa-meteor text-warm icon-position"></span></button>
+</div>
+
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+        <div>
+            <div class="card bg-warm_green border-0">
+                <div class="card-body pt-4 pb-4">
+                    <p class="card-text myabout fs-6 text-white">
+
+                    </p>
+                </div>
+            </div>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <ul class="list-group list-group-flush rounded-2">
+                    
+                </ul>
+            }
+            else
+            {
+                <ul class="list-group list-group-flush rounded-2">
+                    
+                </ul>
+            }
+
+        </div>
+    </div>
+</div>

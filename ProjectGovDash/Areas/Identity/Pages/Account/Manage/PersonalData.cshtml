@@ -1,0 +1,39 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<div class="card Page-input-card mb-4 bg-white shadow rounded pe-2 ps-2">
+    <div class="card-body">
+        <h5 class="signin-card-title text-warm fs-2">
+            Dhibiti Akaunti
+        </h5>
+        <h6><span class="badge bg-warm mt-2">Karibu mzazi.</span></h6>
+
+        <p>
+            Akaunti yako ina data ya kibinafsi ambayo umetupa. Ukurasa huu hukuruhusu kupakua au kufuta data hiyo.
+            Kufuta data hii kutaondoa akaunti yako kabisa, na hii haiwezi kurejeshwa.
+        </p>
+
+        <div>
+            <section>
+                <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                    <div class="form-group">
+                        <div>
+                            <button id="update-profile-button" type="submit" class="btn btn-warm btn-lg rounded-pill Page-button-transform">Futa</button>
+                        </div>
+                    </div>
+                </form>
+                <p>
+                    <a id="delete" asp-page="DeletePersonalData" class="btn btn-warm btn-lg rounded-pill Page-button-transform">Pakua data</a>
+                </p>
+            </section>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

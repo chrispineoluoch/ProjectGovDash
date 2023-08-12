@@ -1,0 +1,10 @@
+﻿
+<option value="">Select a Ward</option>
+
+@if (ViewBag.WardOptions != null)
+{
+    foreach (var item in ViewBag.WardOptions)
+    {
+        <option value="@item.Value">@item.Text </option>
+    }
+}

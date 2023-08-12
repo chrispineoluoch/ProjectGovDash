@@ -1,0 +1,10 @@
+﻿
+<option value="">Select a Constituency</option>
+
+@if (ViewBag.ConstituencyOptions != null)
+{
+    foreach (var item in ViewBag.ConstituencyOptions)
+    {
+        <option value="@item.Value">@item.Text </option>
+    }
+}

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ICTA</title>
+
+    @{ Html.RenderPartial("_StylesPartial"); }
+    @{ Html.RenderPartial("_ScriptsPartial"); }
+</head>
+
+<body>
+    @{ Html.RenderPartial("_NavbarPartial"); }
+
+    <div id="loader" class="loader"> </div>
+
+    <div id="wrapper" style="display:none;">
+        <div class="container body-content body-padding">
+            <div class="row">
+                <div class="col-auto w-100">
+                    @{ Html.RenderPartial("_SideCanvasPartial"); }
+                </div>
+                <div class="col mt-4">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="~/css/pageloader.css" />
+    <script src="~/js/pageloader.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

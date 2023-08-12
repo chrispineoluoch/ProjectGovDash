@@ -1,0 +1,75 @@
+﻿@model ProjectGovDash.Models.PublicWiFi.PublicWiFiGallery 
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div>
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!--This is the code for the image uploader-->
+            <div class="input-group mb-3">
+                <div class="card p-3" style="width: 18rem;">
+                    <p id="p_upload-guide" class="mt-2 ms-2">Select an image file below</p>
+                    <input type="file" name="site_Image" id="site_Image" class="form-control Page-input-box myinput-text" accept=".jpg,.jpeg,.png" onchange="showPreviewImage()" />
+
+                    <div class="card-body">
+                        <input name="SubmitProfile" type="submit" value="Upload" class="btn btn-warm rounded-pill d-inline-block me-2 mb-1" />
+                        <a href="#" onclick="clearImage()" class="btn btn-warm rounded-pill d-inline-block mb-1">Clear image</a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="image_viewer">
+                <div id="carouselExampleCaptions" class="carousel slide">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="input_image" src="" class="d-block w-100 input_image" alt="...">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function showPreviewImage() {
+            input_image.src = URL.createObjectURL(event.target.files[0]);
+            $("#p_upload-guide").hide();
+            $("#s_upload-guide").hide();
+            $('#image_viewer').show();
+        }
+
+        function clearImage() {
+            document.getElementById('site_Image').value = null;
+            input_image.src = "";
+            $("#p_upload-guide").show();
+            $("#s_upload-guide").show();
+            $('#image_viewer').hide();
+        }
+
+        $(document).ready(function () {
+            $('#image_viewer').hide();
+        })
+    </script>
+
+}

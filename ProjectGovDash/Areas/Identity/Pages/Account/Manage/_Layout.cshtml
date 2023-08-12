@@ -1,0 +1,29 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string?)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div>
+    <h5 class="signin-card-title text-warm fs-2 fw-bold mb-4">
+        Dhibiti Akaunti yako
+    </h5>
+
+    <div class="row">
+        <div class="col-md-4">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

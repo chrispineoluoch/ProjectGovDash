@@ -1,0 +1,18 @@
+﻿@inject SignInManager<IdentityUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+<div class="card Page-input-card mb-4 bg-white shadow rounded p-3">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item rounded-pill"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Wasifu wako</a></li>
+        <li class="nav-item rounded-pill"><a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Barua pepe yako</a></li>
+        <li class="nav-item rounded-pill"><a class="nav-link @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Nenosiri lako</a></li>
+        @*@if (hasExternalLogins)
+        {
+            <li id="external-logins" class="nav-item"><a id="external-login" class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">Chaguo za kuingia kwa nje</a></li>
+        }
+        <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Uthibitishaji wa mambo mawili</a></li>*@
+        <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Taarifa binafsi</a></li>
+    </ul>
+</div>

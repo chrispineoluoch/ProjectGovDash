@@ -1,0 +1,10 @@
+﻿
+<option value="">Select a SubCounty</option>
+
+@if (ViewBag.SubCountyOptions != null)
+{
+    foreach (var item in ViewBag.SubCountyOptions)
+    {
+        <option value="@item.Value">@item.Text </option>
+    }
+}

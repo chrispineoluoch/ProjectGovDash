@@ -1,0 +1,89 @@
+﻿@model ProjectGovDash.Models.DSHSurvey.DSHSurveyFiberTarget
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>DSHSurveyFiberTarget</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Editor" class="control-label"></label>
+                <input asp-for="Editor" class="form-control" />
+                <span asp-validation-for="Editor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateofCreation" class="control-label"></label>
+                <input asp-for="DateofCreation" class="form-control" />
+                <span asp-validation-for="DateofCreation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateofModification" class="control-label"></label>
+                <input asp-for="DateofModification" class="form-control" />
+                <span asp-validation-for="DateofModification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IPAddress" class="control-label"></label>
+                <input asp-for="IPAddress" class="form-control" />
+                <span asp-validation-for="IPAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Region" class="control-label"></label>
+                <input asp-for="Region" class="form-control" />
+                <span asp-validation-for="Region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="County" class="control-label"></label>
+                <input asp-for="County" class="form-control" />
+                <span asp-validation-for="County" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nature" class="control-label"></label>
+                <input asp-for="Nature" class="form-control" />
+                <span asp-validation-for="Nature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SectionName" class="control-label"></label>
+                <input asp-for="SectionName" class="form-control" />
+                <span asp-validation-for="SectionName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Distance" class="control-label"></label>
+                <input asp-for="Distance" class="form-control" />
+                <span asp-validation-for="Distance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

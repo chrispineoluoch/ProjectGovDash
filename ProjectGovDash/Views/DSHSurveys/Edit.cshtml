@@ -1,0 +1,74 @@
+﻿@model ProjectGovDash.Models.DSHSurvey.DSHSurvey
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="card Page-input-card mb-4 shadow">
+            <div class="card-body">
+                <h5 class="signin-card-title text-warm fs-5 fw-normal justify-content-start d-grid mb-4">
+                    Survey Details
+                </h5>
+
+                <div class="justify-content-center">
+                    <div class="row g-4 pb-3">
+                        <form asp-action="Edit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="Region" id="Region" class="form-control Page-input-box myinput-text" />
+                                <label for="Region">The region name</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="County" id="County" class="form-control Page-input-box myinput-text" />
+                                <label for="County">The county name</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="NoLastMileSites" id="NoLastMileSites" class="form-control Page-input-box myinput-text" />
+                                <label for="NoLastMileSites">Number of Last Mile Sites</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="DistanceLastMile" id="DistanceLastMile" class="form-control Page-input-box myinput-text" />
+                                <label for="DistanceLastMile">Distance of Last Mile</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="DistanceMetro" id="DistanceMetro" class="form-control Page-input-box myinput-text" />
+                                <label for="DistanceMetro">Distance of Metro</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="DistanceBackbone" id="DistanceBackbone" class="form-control Page-input-box myinput-text" />
+                                <label for="DistanceBackbone">Distance of Backbone</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input asp-for="DateofSurvey" id="DateofSurvey" class="form-control Page-input-box myinput-text mydatepicker" type="date" />
+                                <label for="DateofSurvey">The date of the survey</label>
+                            </div>
+
+                            <div class="text-center mb-3">
+                                <input name="SubmitProfile" type="submit" value="Finish" class="btn btn-warm btn-lg rounded-pill Page-button-transform" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/datepicker.js"></script>
+    <script src="~/js/boundaries.js"></script>
+
+}

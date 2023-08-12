@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        <div class="d-flex justify-content-center mb-3">
+            <select id="Region" class="form-control Page-input-box myinput-text me-3 mw-290">
+            </select>
+            <select id="County" class="form-control Page-input-box myinput-text me-3 mw-290">
+            </select>
+        </div>
+    </div>
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-auto mb-3">
+                <div class="card bg-light-subtle text-success question-card border-0 shadow">
+                    <div class="card-body">
+                        <h4 class="text-center text-warm_light">Last Mile Sites</h4>
+                        <h3 class="text-center"><span id="lastmilecounter" class="badge bg-success"></span></h3>
+                        <canvas id="lmschart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto mb-3">
+                <div class="card bg-light-subtle text-success question-card border-0 shadow">
+                    <div class="card-body">
+                        <h4 class="text-center text-warm_light">Metro Fiber</h4>
+                        <h3 class="text-center"><span id="metrocounter" class="badge bg-success"></span></h3>
+                        <canvas id="metrochart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto mb-3">
+                <div class="card bg-light-subtle text-success question-card border-0 shadow">
+                    <div class="card-body">
+                        <h4 class="text-center text-warm_light"> Backbone Fiber</h4>
+                        <h3 class="text-center"><span id="backbonecounter" class="badge bg-success"></span></h3>
+                        <canvas id="backbonechart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="justify-content-center">
+        <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto mt-3" type="button" onclick="window.location.href='@Url.Action("Create", "DSHSurveys")'">
+            New Record <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+        </button>
+        <button id="sample-query-1" class="btn btn-warm rounded-pill d-flex m-auto mt-3" type="button" onclick="window.location.href='@Url.Action("Index", "DSHSurveys")'">
+            Existing Records <span style="position: relative; top: 2px; left: 6px;"><span id="myspinicon-1"></span></span>
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="module" src="~/lib/Chart.js/chart.umd.js"></script>
+    <script src="~/js/boundaries.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(function ChartData() {
+                $.ajax({
+                    url: "/DSHSurveys/GetChartData",
+                    type: 'GET',
+                    success: function (data) {
+                        /**Last mile sites computations*/
+                        var totallms = 1976;
+                        var completelms = data.sumnolastmilesites;
+                        var lastmilecounter = document.getElementById('lastmilecounter');
+                        lastmilecounter.textContent = completelms;
+
+                        /**Metro fiber distance computations*/
+                        var totalmetro = 648;
+                        var completemetro = data.sumdistancemetro;
+                        var metrocounter = document.getElementById('metrocounter');
+                        metrocounter.textContent = completemetro;
+
+                        /**Backbone fiber distance computations*/
+                        var totalbackbone = 2517;
+                        var completebackbone = data.sumdistancebackbone;
+                        var backbonecounter = document.getElementById('backbonecounter');
+                        backbonecounter.textContent = completebackbone;
+
+                        /**Number of last mile sites*/
+                        var lmsctx = document.getElementById('lmschart').getContext('2d');
+                        var lmschart = new Chart(lmsctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Target', 'Complete'],
+                                datasets: [{
+                                    label: 'Bar Chart',
+                                    data: [totallms, completelms],
+                                    backgroundColor: ['rgba(1, 166, 78, 0.7)', 'rgba(236, 35, 42, 0.7)']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+                        /**Distance of metro fiber*/
+                        var metroctx = document.getElementById('metrochart').getContext('2d');
+                        var metrochart = new Chart(metroctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Target', 'Complete'],
+                                datasets: [{
+                                    label: 'Bar Chart',
+                                    data: [totalmetro, completemetro],
+                                    backgroundColor: ['rgba(1, 166, 78, 0.7)', 'rgba(236, 35, 42, 0.7)']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+                        /**Distance of backbone fiber*/
+                        var backbonectx = document.getElementById('backbonechart').getContext('2d');
+                        var backbonechart = new Chart(backbonectx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Target', 'Complete'],
+                                datasets: [{
+                                    label: 'Bar Chart',
+                                    data: [totalbackbone, completebackbone],
+                                    backgroundColor: ['rgba(1, 166, 78, 0.7)', 'rgba(236, 35, 42, 0.7)']
+                                }]
+                            },
+                            options: {
+                                responsive: true
+                            }
+                        });
+
+                        /**On county select change*/
+                        $(function CountyChartData() {
+                            const countySelect = document.getElementById('County');
+
+                            countySelect.addEventListener('change', function () {
+                                const selectedCounty = countySelect.value;
+
+                                $(function () {
+                                    $.ajax({
+                                        url: "/DSHSurveys/GetChartData",
+                                        type: 'GET',
+                                        data: { county: selectedCounty },
+                                        dataType: "json",
+                                        success: function (data) {
+                                            /**Last mile sites computations*/
+                                            var countytotallms = 42;
+                                            var countycompletelms = data.sumactuallastmilesites;
+                                            var lastmilecounter = document.getElementById('lastmilecounter');
+                                            lastmilecounter.textContent = countycompletelms;
+
+                                            /**Metro fiber distance computations*/
+                                            var countytotalmetro = data.sumtargetdistancemetro;
+                                            var countycompletemetro = data.sumactualdistancemetro;
+                                            var metrocounter = document.getElementById('metrocounter');
+                                            metrocounter.textContent = countycompletemetro;
+
+                                            /**Backbone fiber distance computations*/
+                                            var countytotalbackbone = data.sumtargetdistancebackbone;
+                                            var countycompletebackbone = data.sumactualdistancebackbone;
+                                            var backbonecounter = document.getElementById('backbonecounter');
+                                            backbonecounter.textContent = countycompletebackbone;
+
+                                            /**Number of last mile sites*/
+                                            lmschart.data.datasets[0].data = [countytotallms, countycompletelms];
+                                            lmschart.update();
+
+                                            /**Distance of metro fiber*/
+                                            metrochart.data.datasets[0].data = [countytotalmetro, countycompletemetro];
+                                            metrochart.update();
+
+                                            /**Distance of backbone fiber*/
+                                            backbonechart.data.datasets[0].data = [countytotalbackbone, countycompletebackbone];
+                                            backbonechart.update();
+                                        }
+                                    });
+                                });
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+}
+

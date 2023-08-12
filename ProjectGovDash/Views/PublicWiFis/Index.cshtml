@@ -1,0 +1,158 @@
+﻿@using X.PagedList;
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@using Microsoft.AspNetCore.Http;
+@using Microsoft.AspNetCore.Identity
+@using ProjectGovDash.Models;
+@using ProjectGovDash.Models.PublicWiFi;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model IPagedList<PublicWiFi>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("Index", "PublicWiFis", FormMethod.Get))
+    {
+        <div class="input-group mb-3 m-auto">
+            <input type="text" name="Searchterm" id="Searchterm" class="form-control search-tab rounded-start-pill" placeholder="Find a public wifi site by typing here ..." aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-warm rounded-end-pill" type="submit" id="button-addon2">Search</button>
+        </div>
+    }
+
+    @*@using (Html.BeginForm("Index", "PublicWiFis", FormMethod.Get))
+    {
+        <div class="input-group mb-3 m-auto">
+            <input type="text" name="Searchcoordinates" id="Searchcoordinates" class="form-control search-tab rounded-start-pill" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button id="Searchcoordinates" class="btn btn-warm rounded-end-pill" type="submit">My Location</button>
+        </div>
+    }*@
+
+    <div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card Page-input-card-index mb-4 shadow bg-light">
+                        <div class="card-body">
+
+                            <h5 class="text-warm_light fs-5 fw-normal mb-4">
+                                @item.SiteName
+                                @{
+                                    var status = item.SiteStatus;
+                                    string fontcolor = "";
+
+                                    if (status == "Online")
+                                    {
+                                        fontcolor = "green";
+                                    }
+                                    else
+                                    {
+                                        fontcolor = "red";
+                                    }
+                                }
+                                @{
+                                    if (fontcolor == "green")
+                                    {
+                                        <span class="fa fa-check-circle text-warm_light"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="fa fa-xmark-circle text-warm"></span>
+                                    }
+                                }
+                            </h5>
+
+                            <div class="mt-3">
+                                <p class="card-text mb-1">County: @Html.DisplayFor(modelItem => item.County)</p>
+                                <p class="card-text mb-1">Constituency: @Html.DisplayFor(modelItem => item.Constituency)</p>
+                                <p class="card-text mb-1">Ward: @Html.DisplayFor(modelItem => item.Ward)</p>
+                                <p class="card-text mb-1">Access Points: @Html.DisplayFor(modelItem => item.AccessPoints)</p>
+                            </div>
+
+                            @{
+                                string? sitecoordinates = item.Coordinates;
+                                string? sitelocation = "https://www.google.com/maps/search/?api=1&query=" + sitecoordinates;
+                            }
+
+                            <div class="mt-3" style="display: flex;">
+                                <a href="@sitelocation" class="btn btn-warm rounded-pill d-inline-block mb-1 transform-9">Directions</a>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <a href="@Url.Action("Create", "PublicWiFiGalleries", new { siteid = item.Id })" class="btn btn-warm rounded-pill d-inline-block mb-1 transform-9"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Gallery</a>
+                                }
+                                @if (!SignInManager.IsSignedIn(User))
+                                {
+                                    <a href="@Url.Action("Index", "PublicWiFiGalleries", new { siteid = item.Id })" class="btn btn-warm rounded-pill d-inline-block mb-1 transform-9">Gallery</a>
+                                }
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <a href="@Url.Action("Edit", "Profiles", new { id = item.Id })" class="btn btn-warm rounded-pill d-inline-block mb-1 transform-9">Edit</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    @{
+        var searchterm = ViewContext.HttpContext.Request.Query["Searchterm"];
+    }
+
+    <div>
+        @Html.PagedListPager(Model, page =>
+            Url.Action("Index", new
+                {
+                    page = page,
+                Searchterm = searchterm
+            }),
+            new PagedListRenderOptions
+            {
+                UlElementClasses = new string[] { "pagination pagination-xs pagination-gutter pagination-warning" },
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" },
+                LinkToPreviousPageFormat = "Previous",
+                LinkToNextPageFormat = "Next",
+                ClassToApplyToLastListItemInPager = "page-previus",
+                ClassToApplyToFirstListItemInPager = "page-next"
+            })
+    </div>
+</div>
+
+<script>
+    // Work in progress
+    $(document).ready(function () {
+        // Function to get current location coordinates
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        // Function to handle the retrieved position
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Assign coordinates to the input field
+            $('#Searchcoordinates').val(latitude + ', ' + longitude);
+        }
+
+        // Call the getCurrentLocation function when the button is clicked
+        $('#Searchcoordinates').click(function (e) {
+            e.preventDefault();
+            getCurrentLocation();
+        });
+    });
+</script>
+
